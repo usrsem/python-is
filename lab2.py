@@ -101,7 +101,7 @@ kv = Builder.load_file('login.kv')
 sm = windowManager()
 
 # reading all the data stored
-users=pd.read_csv('login.csv')
+# users=pd.read_csv('login.csv')
 
 # adding screens
 sm.add_widget(loginWindow(name='login'))

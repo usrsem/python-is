@@ -20,23 +20,28 @@ class Lab1(App):
 		root_widget: BoxLayout = BoxLayout(orientation='vertical')
 
 		input_field: TextInput = TextInput(font_size = 50, size_hint_y = None, height = 100)
-		output_label: Label = Label(size_hint_y=1, font_size=70)
+		password_output_label: Label = Label(size_hint_y=1, font_size=70)
+		p_output_label: Label = Label(size_hint_y=1, font_size=65)
 
 		clear_button: Button = Button(text='clear', size_hint_y=None, height=100, font_size=50)
 		generate_button: Button = Button(text='generate', size_hint_y=None, height=100, font_size=50)
 
 
 		def clear_label(instance):
-			output_label.text = ''
+			password_output_label.text = ''
 			input_field.text = ''
+			p_output_label.text = ''
 		clear_button.bind(on_press=clear_label)
 
 		def generate_password(instance):
-			output_label.text = self._generate_password(input_field.text)
+			P, password = self._generate_password(input_field.text)
+			password_output_label.text = 'Password: ' + password
+			p_output_label.text = 'P: ' + P
 		generate_button.bind(on_press=generate_password)
 
 
-		root_widget.add_widget(output_label)
+		root_widget.add_widget(password_output_label)
+		root_widget.add_widget(p_output_label)
 		root_widget.add_widget(input_field)
 		root_widget.add_widget(generate_button)
 		root_widget.add_widget(clear_button)
@@ -44,7 +49,7 @@ class Lab1(App):
 		return root_widget
 
 	@staticmethod
-	def _generate_password(input: str) -> str:
+	def _generate_password(input: str) -> tuple[str, str]:
 		password: str = ''
 		symbols: list[str] = ['!', '”', '#', '$', '%', '&', '’', '(', ')', '*']
 		symbols_len: int = len(symbols)
@@ -62,7 +67,7 @@ class Lab1(App):
 
 		password += chr(96 + P)
 
-		return password
+		return (str(P), password)
 
 
 if __name__ == "__main__":

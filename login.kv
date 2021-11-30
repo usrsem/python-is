@@ -1,0 +1,147 @@
+# there are three screens
+windowManager:
+	loginWindow:
+	signupWindow:
+	logDataWindow:
+
+# GUI for the login window
+<loginWindow>:
+	username : username
+	password : password
+	FloatLayout:
+		size: root.width, root.height
+		Label:
+			text : "USERNAME"
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.25, "top":0.9}
+		TextInput:
+			id : username
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.9}
+		Label:
+			text : "PASSWORD: "
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.25, "top" : 0.7}
+		TextInput:
+			id : password
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.7}
+		Button:
+			text : "Create an account"
+			size_hint : 0.4, 0.1
+			pos_hint : {"x" : 0.33, "top" : 0.4}
+			on_release:
+				app.root.current = 'signup'
+				root.manager.transition.direction = "left"
+		Button:
+			text : "LOGIN"
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.39, "top" : 0.2}
+			on_release:
+				root.validate()
+				root.manager.transition.direction = "up"
+
+# GUI for the signup window
+<signupWindow>:
+	username : username
+	password : password
+	full_name : full_name
+	dob : dob
+	city : city
+	phone_number : phone_number
+	FloatLayout:
+		Label:
+			text : "USERNAME"
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.25, "top":0.9}
+		TextInput:
+			id : username
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.9}
+		Label:
+			text : "PASSWORD: "
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.25, "top" : 0.7}
+		TextInput:
+			id : password
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.7}
+		Label:
+			text : "FULL NAME: "
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.25, "top":0.9}
+		TextInput:
+			id : full_name
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.9}
+		Label:
+			text : "DOB: "
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.25, "top" : 0.7}
+		TextInput:
+			id : dob
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.7}
+		Label:
+			text : "CITY: "
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.25, "top":0.9}
+		TextInput:
+			id : city
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.9}
+		Label:
+			text : "PHONE NUMBER "
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.25, "top" : 0.7}
+		TextInput:
+			id : phone_number
+			multiline :False
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.45, "top" : 0.7}
+		Button:
+			text : "SUBMIT"
+			size_hint : 0.3, 0.1
+			pos_hint : {"x" : 0.39, "top" : 0.28}
+			on_press :
+				root.signupbtn()
+				root.manager.transition.direction = "right"
+
+# GUI to show validation result
+<logDataWindow>:
+	info : info
+	FloatLayout:
+		Label:
+			id : info
+			size_hint : 0.8, 0.2
+			pos_hint : {"x" : 0.15, "top" : 0.8}
+			text : "SUCCESSFULLY LOGGED IN"
+		Button:
+			text : "Login"
+			size_hint : 0.4, 0.1
+			pos_hint : {"x" : 0.33, "top" : 0.55}
+			on_release:
+				app.root.current = 'login'
+				root.manager.transition.direction = "down"
+		Button:
+			text : "Create new account"
+			size_hint : 0.4, 0.1
+			pos_hint : {"x" : 0.33, "top" : 0.4}
+			on_release:
+				app.root.current = 'signup'
+				root.manager.transition.direction = "down"
+
+
+# GUI for pop up window
+<P>:
+	Label:
+		text : "Please enter valid information"
+		size_hint : 0.2, 0.1
+		pos_hint : {"x" : 0.3, "top" : 0.8}

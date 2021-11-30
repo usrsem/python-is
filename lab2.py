@@ -24,26 +24,33 @@ class P(FloatLayout):
 def popFun():
 	show = P()
 	window = Popup(title = "popup", content = show,
-				size_hint = (None, None), size = (300, 300))
+				size_hint = (None, None), size = (600, 600))
 	window.open()
 
 # class to accept user info and validate it
 class loginWindow(Screen):
-	email = ObjectProperty(None)
-	pwd = ObjectProperty(None)
+	username = ObjectProperty(None)
+	password = ObjectProperty(None)
 	def validate(self):
+		if (customer_service.auth_customer(self.username.text, self.password.text)):
+			sm.current = 'logdata'
+			self.username.text = ""
+			self.password.text = ""
+		else:
+			popFun()
+
 
 		# validating if the email already exists
-		if self.email.text not in users['Email'].unique():
-			popFun()
-		else:
+		# if self.email.text not in users['Email'].unique():
+		# 	popFun()
+		# else:
 
-			# switching the current screen to display validation result
-			sm.current = 'logdata'
+		# 	# switching the current screen to display validation result
+		# 	sm.current = 'logdata'
 
-			# reset TextInput widget
-			self.email.text = ""
-			self.pwd.text = ""
+		# 	# reset TextInput widget
+		# 	self.email.text = ""
+		# 	self.pwd.text = ""
 
 
 # class to accept sign up info
@@ -56,8 +63,21 @@ class signupWindow(Screen):
 	phone_number = ObjectProperty(None)
 
 	def signupbtn(self):
+		try:
+			new_customer: Customer = self._create_customer_from_input()
 
-		new_customer: Customer = Customer(
+			customer_service.register_customer(new_customer)
+
+			sm.current = 'login'
+
+			self._clear_input_fields()
+
+		except Exception:
+			popFun()
+
+
+	def _create_customer_from_input(self) -> Customer:
+		return Customer(
 			self.username.text,
 			self.password.text,
 			self.full_name.text,
@@ -66,27 +86,14 @@ class signupWindow(Screen):
 			self.phone_number.text
 		)
 
-		try:
-			customer_service.register_customer(new_customer)
-		except Exception:
-			popFun()
 
-		# creating a DataFrame of the info
-		# user = pd.DataFrame([[self.username.text, self.full_name.text, self.password.text]],
-		# 					columns = ['Name', 'Email', 'Password'])
-		# if self.full_name.text != "":
-		# 	if self.full_name.text not in users['Email'].unique():
-
-		# 		# if email does not exist already then append to the csv file
-		# 		# change current screen to log in the user now
-		# 		user.to_csv('login.csv', mode = 'a', header = False, index = False)
-		# 		sm.current = 'login'
-		# 		self.username.text = ""
-		# 		self.full_name.text = ""
-		# 		self.password.text = ""
-		# else:
-		# 	# if values are empty or invalid show pop up
-		# 	popFun()
+	def _clear_input_fields(self) -> None:
+		self.username.text = ""
+		self.password.text = ""
+		self.full_name.text = ""
+		self.dob.text = ""
+		self.city.text = ""
+		self.phone_number.text = ""
 
 # class to display validation result
 class logDataWindow(Screen):

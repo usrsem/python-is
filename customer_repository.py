@@ -6,7 +6,7 @@ def save_customer(customer: Customer) -> Customer:
 	print(f'Saving {customer=}')
 
 	query: str = """INSERT INTO customer (username, password, full_name, dob, city, phone_number) VALUES (?, ?, ?, ?, ?, ?)"""
-	_query_executor(query, customer[1:])
+	_query_executor(query, customer)
 
 	return customer
 
@@ -15,7 +15,7 @@ def update_customer(customer: Customer) -> Customer:
 	print(f'Updating {customer=}')
 
 	query: str = """UPDATE customer (username, password, full_name, dob, city, phone_number) VALUES (?, ?, ?, ?, ?, ?)"""
-	_query_executor(query, customer[1:])
+	_query_executor(query, customer)
 
 	return customer
 
@@ -33,15 +33,19 @@ def get_customer_by_username(username: str) -> Customer:
 	if (customer == None):
 		raise Exception(f'No customer with {username=}')
 
-	return Customer(
-		customer[0],
+
+	print(f'{customer=}')
+	res = Customer(
 		customer[1],
+		customer[6],
 		customer[2],
 		customer[3],
 		customer[4],
 		customer[5],
-		customer[6],
 	)
+
+	print(f"{res=}")
+	return res
 
 
 def _query_executor(query: str, data: tuple) -> None:
@@ -54,7 +58,6 @@ def _query_executor(query: str, data: tuple) -> None:
 
 if __name__ == "__main__":
 	c: Customer = Customer(
-		-1,
 		'username',
 		'password',
 		'fullname',

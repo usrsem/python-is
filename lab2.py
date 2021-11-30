@@ -6,7 +6,6 @@ from kivy.properties import ObjectProperty
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
 from kivy.uix.floatlayout import FloatLayout
-import pandas as pd
 from customer import Customer
 
 import customer_service
@@ -38,19 +37,6 @@ class loginWindow(Screen):
 			self.password.text = ""
 		else:
 			popFun()
-
-
-		# validating if the email already exists
-		# if self.email.text not in users['Email'].unique():
-		# 	popFun()
-		# else:
-
-		# 	# switching the current screen to display validation result
-		# 	sm.current = 'logdata'
-
-		# 	# reset TextInput widget
-		# 	self.email.text = ""
-		# 	self.pwd.text = ""
 
 
 # class to accept sign up info
@@ -106,9 +92,6 @@ class windowManager(ScreenManager):
 # kv file
 kv = Builder.load_file('login.kv')
 sm = windowManager()
-
-# reading all the data stored
-# users=pd.read_csv('login.csv')
 
 # adding screens
 sm.add_widget(loginWindow(name='login'))
